@@ -3,49 +3,81 @@
 import * as React from "react"
  
 import { Calendar } from "@/components/ui/calendar"
+import { MiniCalendar } from "@/components/ui/minicalendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import { format } from "date-fns"
 
 export default function Home() {
-  const [date, setDate] = React.useState<Date | undefined>(new Date())
-  const [open, setOpen] = React.useState(false)
+  const [pickDate, setPickDate] = React.useState<Date | undefined>(new Date())
+  const [eventDate, setEventDate] = React.useState<Date | undefined>(undefined)
+  const [eventPageOpen, setEventPageOpen] = React.useState(false)
+  const [addEventOpen, setAddEventOpen] = React.useState(false)
 
   const handleDateSelect = (selectedDate: Date | undefined) => {
-    setDate(selectedDate)
+    setPickDate(selectedDate)
     if (selectedDate) {
-      setOpen(true)
+      setEventPageOpen(true)
     }
   }
 
   return (
-    <div className="items-center">
-      <div className="relative z-0">
-        <Calendar mode="single" selected={date} onSelect={handleDateSelect} className="rounded-md border shadow" />
-          <div className="z-100">
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <span></span>
-            </PopoverTrigger>
-            <PopoverContent className="w-80">
-              <div className="space-y-2">
-                <h3 className="font-medium">{date ? format(date, "MMMM d, yyyy") : "Select a date"}</h3>
-                <p className="text-sm text-muted-foreground">You selected {date ? format(date, "EEEE") : "no date"}.</p>
-                <div className="pt-2 border-t mt-2">
-                  <h4 className="text-sm font-medium mb-1">Events:</h4>
-                  <p className="text-xs text-muted-foreground">No events scheduled for this day.</p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <Button variant="outline" size="sm" onClick={() => setOpen(false)}>
-                    Close
-                  </Button>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-      </div>
+    <div className="flex flex-col items-center">
+      <div>
+        <Popover open={eventPageOpen} onOpenChange={setEventPageOpen}>
+          <PopoverTrigger>
+          </PopoverTrigger>
+          <PopoverContent className="w-200">
+            <div className="space-y-2">
 
+              <h3 className="text-lg">{pickDate ? format(pickDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h3>
+              <div className="pt-2 border-t mt-2">
+                <h4 className="text-m font-medium mb-1">Events:</h4>
+                <p className="text-m text-muted-foreground text-wrap">No events scheduled for this day yooooooooooooooo.</p>
+              </div>
+
+              <div className="flex flex-col items-center pt-2">
+                <Button size="lg" onClick={() => setAddEventOpen(true)}>
+                  Add Event
+                </Button>
+                <Popover open={addEventOpen} onOpenChange={setAddEventOpen}>
+                  <PopoverTrigger>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-200 text-wrap">
+                    <h1> Adding Event</h1>
+
+                    <div className="pt-2 border-t mt-2">
+                      <h1 className="">{eventDate ? format(eventDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h1>
+                      <div className="flex justify-center">
+                        <MiniCalendar mode="single" selected={eventDate} onSelect={setEventDate}></MiniCalendar>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between pt-2">
+                      <Button>
+                        Add
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => setAddEventOpen(false)}>
+                        Close
+                      </Button>
+                    </div>
+
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="flex justify-end pt-2">
+                <Button variant="outline" size="sm" onClick={() => setEventPageOpen(false)}>
+                  Close
+                </Button>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
+      <div>
+        <Calendar mode="single" selected={pickDate} onSelect={handleDateSelect} className="rounded-md border shadow" />
+      </div>
     </div>
   )
 }
