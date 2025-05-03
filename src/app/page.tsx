@@ -3,6 +3,7 @@
 import * as React from "react"
  
 import { Calendar } from "@/components/ui/calendar"
+import { TodoList } from "@/components/ui/todolist"
 import { MiniCalendar } from "@/components/ui/minicalendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
@@ -77,6 +78,9 @@ export default function Home() {
       </div>
       <div>
         <Calendar mode="single" selected={pickDate} onSelect={handleDateSelect} className="rounded-md border shadow" />
+      </div>
+      <div>
+        <TodoList/>
       </div>
     </div>
   )
