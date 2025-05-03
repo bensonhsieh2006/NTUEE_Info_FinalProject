@@ -23,12 +23,12 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div>
+    <div className="grid grid-flow-col-dense grid-row-2 items-start mx-8">
+      <div className="">
         <Popover open={eventPageOpen} onOpenChange={setEventPageOpen}>
           <PopoverTrigger>
           </PopoverTrigger>
-          <PopoverContent className="w-200">
+          <PopoverContent className="w-185 mx-8">
             <div className="space-y-2">
 
               <h3 className="text-lg">{pickDate ? format(pickDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h3>
@@ -44,7 +44,7 @@ export default function Home() {
                 <Popover open={addEventOpen} onOpenChange={setAddEventOpen}>
                   <PopoverTrigger>
                   </PopoverTrigger>
-                  <PopoverContent className="w-200 text-wrap">
+                  <PopoverContent className="w-185 text-wrap mx-8">
                     <h1> Adding Event</h1>
 
                     <div className="pt-2 border-t mt-2">
@@ -76,11 +76,13 @@ export default function Home() {
           </PopoverContent>
         </Popover>
       </div>
-      <div>
-        <Calendar mode="single" selected={pickDate} onSelect={handleDateSelect} className="rounded-md border shadow" />
+      <div className="">
+        <Calendar mode="single" selected={pickDate} onSelect={handleDateSelect} className="rounded-md border shadow w-185" />
       </div>
-      <div>
-        <TodoList/>
+      <div className="row-span-2 grid grid-rows-subgrid">
+        <div className="row-start-2">
+          <TodoList/>
+        </div>
       </div>
     </div>
   )
