@@ -7,7 +7,11 @@ import { TodoList } from "@/components/ui/todolist"
 import { MiniCalendar } from "@/components/ui/minicalendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { format } from "date-fns"
+
+import { db } from "@/db"
+import { eventTable } from "@/db/schema"
 
 export default function Home() {
   const [pickDate, setPickDate] = React.useState<Date | undefined>(new Date())
@@ -32,6 +36,7 @@ export default function Home() {
             <div className="space-y-2">
 
               <h3 className="text-lg">{pickDate ? format(pickDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h3>
+              <h3 className="text-lg">{pickDate ? format(pickDate, "yyyy-MM-dd") : "Select a date"}</h3>
               <div className="pt-2 border-t mt-2">
                 <h4 className="text-m font-medium mb-1">Events:</h4>
                 <p className="text-m text-muted-foreground text-wrap">No events scheduled for this day yooooooooooooooo.</p>
