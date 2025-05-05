@@ -1,7 +1,7 @@
 "use client"
 
 import { Checkbox } from "@/components/ui/checkbox"
-import { Button } from "./button"
+import { Button } from "./ui/button"
 
 function Todo()
 {

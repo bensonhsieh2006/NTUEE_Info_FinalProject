@@ -1,6 +1,6 @@
 "use client"
 
-import { Todo } from "@/components/ui/todo"
+import { Todo } from "@/components/todo"
 
 type TodoProps = {
 
