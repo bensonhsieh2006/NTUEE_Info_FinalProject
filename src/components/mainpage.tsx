@@ -3,8 +3,8 @@
 import * as React from "react"
 
 import { Calendar } from "@/components/ui/calendar"
-import { TodoList } from "@/components/ui/todolist"
-import { MiniCalendar } from "@/components/ui/minicalendar"
+import { TodoList } from "@/components/todolist"
+import { MiniCalendar } from "@/components/minicalendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
