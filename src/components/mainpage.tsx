@@ -36,7 +36,7 @@ function MainPage() {
                 <h4 className="text-m font-medium mb-1">Events:</h4>
             </div>
 
-            <AddEventPopover></AddEventPopover>
+            <AddEventPopover defaultDate={pickDate}></AddEventPopover>
 
             <div className="flex justify-end pt-2">
                 <Button variant="outline" size="sm" onClick={() => setEventPageOpen(false)}>

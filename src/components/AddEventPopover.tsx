@@ -10,9 +10,13 @@ import { format } from "date-fns"
 
 import useAddEvent from "@/hooks/useAddEvent"
 
-function AddEventPopover(){
+type addEventProps = {
+    defaultDate: Date | undefined
+}
 
-    const [eventDate, setEventDate] = React.useState<Date | undefined>(new Date())
+function AddEventPopover({defaultDate}: addEventProps){
+
+    const [eventDate, setEventDate] = React.useState<Date | undefined>(defaultDate)
     const [addEventOpen, setAddEventOpen] = React.useState(false)
     const [title, setTitle] = React.useState("")
     const [description, setDescription] = React.useState("")
