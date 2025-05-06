@@ -1,12 +1,15 @@
 import * as React from "react"
  
-import { db } from "@/db"
-import { eventTable } from "@/db/schema"
 import { MainPage } from "@/components/mainpage"
+import AllEvents from "@/components/AllEvents"
 
-export default function Home() {
+export default async function Home() {
 
   return (
-    <MainPage></MainPage>
+    <div>
+      <MainPage></MainPage>
+      <AllEvents></AllEvents>
+    </div>
+
   )
 }
