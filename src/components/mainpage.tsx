@@ -10,14 +10,17 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { format } from "date-fns"
 
+import useAddEvent from "@/hooks/useAddEvent"
 
 function MainPage() {
   const [pickDate, setPickDate] = React.useState<Date | undefined>(new Date())
-  const [eventDate, setEventDate] = React.useState<Date | undefined>(undefined)
+  const [eventDate, setEventDate] = React.useState<Date | undefined>(new Date())
   const [eventPageOpen, setEventPageOpen] = React.useState(false)
   const [addEventOpen, setAddEventOpen] = React.useState(false)
-  const [title, setTitle] = React.useState<string | undefined>("")
-  const [description, setDescription] = React.useState<string | undefined>("")
+  const [title, setTitle] = React.useState("")
+  const [description, setDescription] = React.useState("")
+
+  const {addEvent, loading} = useAddEvent();
 
   const handleDateSelect = (selectedDate: Date | undefined) => {
     setPickDate(selectedDate)
@@ -26,15 +29,14 @@ function MainPage() {
     }
   }
 
-//   const handleAddEvent = async (title: string | undefined, description: string | undefined, date: Date | undefined) => {
-//     await db
-//     .insert(eventTable)
-//     .values({
-//       date: date,
-//       title: title,
-//       description: description
-//     })
-//   }
+  const handleAddEvent = async (title: string, description: string, date: string) => {
+    addEvent({
+        eventDate: date,
+        title: title,
+        description: description})
+    setTitle("");
+    setDescription("");
+  }
   return(
     <div className="grid grid-flow-col-dense grid-row-2 items-start mx-8">
     <div className="">
@@ -70,7 +72,7 @@ function MainPage() {
                         <form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            //handleAddEvent(title, description, eventDate)
+                            handleAddEvent(title, description, format(eventDate, "yyyy-MM-dd"))
                         }}
                         >
                         <Input 
@@ -87,7 +89,7 @@ function MainPage() {
                             className="bg-white" 
                             onChange={(e) => setDescription(e.target.value)}
                         />
-                        <Button type="submit">Add</Button>
+                        <Button type="submit" disabled={loading}>Add</Button>
                         </form>
                     </div>
                     </div>

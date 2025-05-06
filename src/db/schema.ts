@@ -3,7 +3,7 @@ import { pgTable, uuid, varchar, date } from "drizzle-orm/pg-core";
 
 export const eventTable = pgTable("events", {
   id: uuid("id").primaryKey().defaultRandom(),
-  date: date("date"),
-  title: varchar("title", { length: 255}).notNull() ,
-  description: varchar("title", { length: 255}).notNull()
+  eventDate: varchar("eventDate", { length: 15 }).notNull(),
+  title: varchar("title", { length: 50}).notNull(),
+  description: varchar("description", { length: 50}).notNull()
 });
