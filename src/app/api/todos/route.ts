@@ -1,8 +1,9 @@
-import { db } from "@/db"; // Drizzle DB instance
 import { todoTable } from "@/db/schema";
 import { z } from "zod";
+import { and, eq, sql } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 import { db } from "@/db";
+import { Todo } from "@/components/todo";
 
 const TodoSchema = z.object({
   title: z.string().min(1),
@@ -11,7 +12,34 @@ const TodoSchema = z.object({
 
 type Todo = z.infer<typeof TodoSchema>;
 
-export async function POST(req: Request) {
+export async function GET(request: NextRequest) {
+    const data = await request.json();
+
+    try {
+        TodoSchema.parse(data);
+    } 
+    catch (error) {
+        console.error("Error parsing data:", error);
+        return NextResponse.json({ error: "Failed to fetch todos" }, { status: 500 });
+    }
+
+    const { title, description } = data as Todo;
+
+    try {
+        const todos = await db
+            .select()
+            .from(todoTable)
+            .where(eq(todoTable.title, title))
+            .execute();
+        return NextResponse.json(todos, { status: 200 });
+    } 
+    catch (error) {
+        console.error("Error fetching todos:", error);
+        return NextResponse.json({ error: "Failed to fetch todos" }, { status: 500 });
+    }
+}
+
+export async function POST(req: NextRequest) {
     const data = await req.json();
 
     try {
@@ -28,8 +56,8 @@ export async function POST(req: Request) {
         const result = await db
             .insert(todoTable)
             .values({
-            title,
-            description,
+                title,
+                description,
             })
             .onConflictDoNothing()
             .returning()

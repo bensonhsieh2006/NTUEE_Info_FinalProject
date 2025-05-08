@@ -6,37 +6,29 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type { EventHandler, MouseEvent } from "react";
+import { useState } from "react"
 
 type AddTodoButtonProps = {
     
 }
 
-function RealAddTodoButton() {
-    const handleClick: EventHandler<MouseEvent> = async (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        console.log("Add Todo Button Clicked");
-        
-    };
-
-    return (
-        <Button
-            variant="outline"
-            onClick={handleClick}
-            size="sm"
-            className="cursor-pointer"
-        >
-            Add
-        </Button>
-    )
-}
 
 function AddTodoButton({}: AddTodoButtonProps) {
 
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value);
+    };
+    const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDescription(e.target.value);
+    }
+    
     const handleClick: EventHandler<MouseEvent> = async (e) => {
         e.stopPropagation();
         e.preventDefault();
-        console.log("Add Todo Button Clicked");
+        console.log("Add Todo Button Clicked", title, description);
         
     };
 
@@ -63,26 +55,28 @@ function AddTodoButton({}: AddTodoButtonProps) {
                 </div>
                 <div className="grid gap-2">
                     <div className="grid grid-cols-3 items-center gap-4">
-                        <Label htmlFor="width">Title</Label>
+                        <Label htmlFor="title">Title</Label>
                         <Input
-                        id="width"
-                        defaultValue=""
-                        className="col-span-2 h-8"
+                            id="title"
+                            value={title}
+                            onChange={handleTitleChange}
+                            className="col-span-2 h-8"
                         />
                     </div>
                     <div className="grid grid-cols-3 items-center gap-4">
-                        <Label htmlFor="maxWidth">Description</Label>
+                        <Label htmlFor="description">Description</Label>
                         <Input
-                        id="maxWidth"
-                        defaultValue=""
-                        className="col-span-2 h-8"
+                            id="description"
+                            value={description}
+                            onChange={handleDescriptionChange}
+                            className="col-span-2 h-8"
                         />
                     </div>
                 </div>
             </div>
             <Button
                 variant="outline"
-                // onClick={handleClick}
+                onClick={handleClick}
                 // size="sm"
                 className="cursor-pointer mt-4"
             >
