@@ -7,7 +7,8 @@ import { db } from "@/db";
 import { eventTable } from "@/db/schema";
 
 const addEventRequestSchema = z.object({
-    eventDate: z.string().min(1).max(15),
+    eventDate: z.string().date(),
+    //eventDate: z.string().min(1).max(15),
     title: z.string().min(1).max(50),
     description: z.string().min(1).max(50),
 });
@@ -24,7 +25,6 @@ export async function GET(request: NextRequest){
         return NextResponse.json({error: "Invalid Request"}, {status: 400});
     }
 
-    const {eventDate, title, description} = data as AddEventRequest
 
     try{
         await db

@@ -10,6 +10,8 @@ import { format } from "date-fns"
 
 import useAddEvent from "@/hooks/useAddEvent"
 
+import { checkDate } from "@/lib/utils"
+
 type addEventProps = {
     defaultDate: Date | undefined
 }
@@ -41,24 +43,31 @@ function AddEventPopover({defaultDate}: addEventProps){
                 <PopoverTrigger>
                 </PopoverTrigger>
 
-                <PopoverContent className="w-185 text-wrap mx-8 bg-gray-50">
+                <PopoverContent className="w-185 h-100 text-wrap mx-8 bg-gray-50 overflow-auto">
                     <h1> Adding Event</h1>
 
                     <div className="pt-2 border-t mt-2">
                         <h1 className="">{eventDate ? format(eventDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h1>
                         <div className="flex justify-center">
-                            <MiniCalendar mode="single" selected={eventDate} onSelect={setEventDate}></MiniCalendar>
+                            <MiniCalendar 
+                              mode="single" 
+                              selected={eventDate} 
+                              onSelect={setEventDate}>
+                            </MiniCalendar>
                         </div>
                         <div className="w-full">
                             <form
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                handleAddEvent(title, description, format(eventDate, "yyyy-MM-dd"))
+                                if (eventDate === undefined){
+
+                                }
+                                handleAddEvent(title, description, format(checkDate(eventDate), "yyyy-MM-dd"))
                             }}
                             >
                             <Input 
                                 type="text" 
-                                placeholder="Title" 
+                                placeholder="Event" 
                                 value={title} 
                                 className="bg-white" 
                                 onChange={(e) => setTitle(e.target.value)}
