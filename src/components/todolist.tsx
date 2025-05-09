@@ -7,13 +7,41 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type { EventHandler, MouseEvent } from "react";
 import { useState } from "react"
+import useTodo from "@/hooks/useTodo"
+import { useEffect } from "react"
 
-type AddTodoButtonProps = {
-    
+
+function Todos()
+{
+    const { loading, todos, getTodos } = useTodo();
+    // console.log("Todos", todos);
+    useEffect(() => {
+        getTodos();
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (todos?.length === 0) {
+        return <h4>No todos found</h4>;
+    }
+
+    return (
+        <>
+            {todos?.map((todo) => (
+                <Todo
+                    key={todo.id}
+                    title={todo.title}
+                    description={todo.description}
+                    completed={todo.completed}
+                />
+            ))}
+        </>
+    );
 }
 
-
-function AddTodoButton({}: AddTodoButtonProps) {
+function AddTodoButton() {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -24,11 +52,23 @@ function AddTodoButton({}: AddTodoButtonProps) {
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(e.target.value);
     }
-    
+    const { loading, createTodo } = useTodo();
+
     const handleClick: EventHandler<MouseEvent> = async (e) => {
         e.stopPropagation();
         e.preventDefault();
         console.log("Add Todo Button Clicked", title, description);
+
+        if (!title) return;
+
+        try {
+            await createTodo(title, description);
+            setTitle("");
+            setDescription("");
+        }
+        catch (error) {
+            console.error("Error creating todo:", error);
+        }
         
     };
 
@@ -89,20 +129,13 @@ function AddTodoButton({}: AddTodoButtonProps) {
     )
 }
 
-
-
 function TodoList()
 {
     return(
     <>
         <div className="flex-col text-2xl gap-4">
             <h1>Todo List :</h1>
-            
-        
-            <Todo/> 
-            <Todo/> 
-            <Todo/> 
-            <Todo/> 
+            <Todos/>
         </div>
         <div className="flex-col text-2xl gap-4">
             <AddTodoButton/>
