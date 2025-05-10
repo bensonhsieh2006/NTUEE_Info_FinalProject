@@ -2,17 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 
 import { useRouter } from "next/navigation";
 
-type Todo = {
-    id: string;
-    title: string;
-    description: string;
-    completed: boolean;
-}
+import type { TodoProps } from "@/types/todo"
 
 export default function useTodo() {
 
     const [loading, setLoading] = useState(false);
-    const [todos, setTodos] = useState<Todo[]|null>([]);
+    const [todos, setTodos] = useState<TodoProps[]|null>([]);
     const router = useRouter();
 
 
@@ -63,8 +58,8 @@ export default function useTodo() {
 
             // ⚡️ 立即更新本地資料，避免二次 API 請求(GPT)
             setTodos((prevTodos) => (prevTodos ? [newTodo, ...prevTodos] : [newTodo]));
-
-            router.refresh();
+            console.log("New Todo", newTodo);
+            // router.refresh();
         } 
         catch (error) {
             console.error("Error creating todo:", error);
@@ -86,9 +81,8 @@ export default function useTodo() {
 
             if (!response.ok) {
                 throw new Error("Failed to delete todo");
+                console.log("Error deleting todo:", response);
             }
-            // const data = await getTodos();
-            // setTodos(data);
 
             router.refresh();
         }
@@ -100,7 +94,7 @@ export default function useTodo() {
         }
     };
 
-    const updateTodo = async (id: string, title: string, description: string) => {
+    const updateTodo = async (id: string, title: string, description: string, completed:boolean) => {
         setLoading(true);
         try {
             const response = await fetch(`/api/todos/${id}`, {
@@ -108,7 +102,7 @@ export default function useTodo() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ title, description }),
+                body: JSON.stringify({ title, description, completed }),
             });
             if (!response.ok) {
                 throw new Error("Failed to update todo");
