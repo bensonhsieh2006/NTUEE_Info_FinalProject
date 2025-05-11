@@ -8,7 +8,7 @@ import { MiniCalendar } from "@/components/minicalendar"
 
 import { format } from "date-fns"
 
-import useAddEvent from "@/hooks/useAddEvent"
+import useEvent from "@/hooks/useEvent"
 
 import { checkDate } from "@/lib/utils"
 
@@ -22,7 +22,7 @@ function AddEventPopover({defaultDate}: addEventProps){
     const [addEventOpen, setAddEventOpen] = React.useState(false)
     const [title, setTitle] = React.useState("")
     const [description, setDescription] = React.useState("")
-    const {addEvent, loading} = useAddEvent();
+    const {addEvent, loading} = useEvent();
 
     const handleAddEvent = async (title: string, description: string, date: string) => {
         addEvent({

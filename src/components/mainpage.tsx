@@ -16,8 +16,10 @@ import { checkDate } from "@/lib/utils"
 
 function MainPage({
   children,
+  modifiers
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  modifiers: any
 }) {
   const [pickDate, setPickDate] = React.useState<Date | undefined>(new Date());
   const [eventPageOpen, setEventPageOpen] = React.useState(false);
@@ -25,14 +27,24 @@ function MainPage({
   const router = useRouter();
   const pathname = usePathname();
 
+  const modifierStyles = {
+    booked: {
+      backgroundColor: "rgb(174, 214, 241)",
+      color: "white",
+      borderRadius: "50%"
+    }
+  }
   const handleDateSelect = (selectedDate: Date | undefined) => {
     setPickDate(selectedDate)
 
-
     const pickedDate = format(checkDate(selectedDate), "yyyy-MM-dd")
     const params = new URLSearchParams(searchParams);
+
     params.set("pickedDate", pickedDate!);
-    router.push(`${pathname}?${params.toString()}`)
+    router.push(`${pathname}?${params.toString()}`);
+
+    console.log(pickedDate);
+
     if (selectedDate) {
       setEventPageOpen(true)
     }
@@ -79,6 +91,11 @@ function MainPage({
           selected={pickDate} 
           onSelect={handleDateSelect} 
           className="rounded-md border shadow w-185" 
+          /*components={{
+            DayButton
+          }} */
+          modifiers={modifiers}
+          modifiersStyles={modifierStyles}
         />
     </div>
     <div className="row-span-2 grid grid-rows-subgrid">

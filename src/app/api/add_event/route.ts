@@ -13,7 +13,13 @@ const addEventRequestSchema = z.object({
     description: z.string().min(1).max(50),
 });
 
+const deleteEventRequestSchema = z.object({
+    id: z.string().uuid(),
+})
+
 type AddEventRequest = z.infer<typeof addEventRequestSchema>;
+
+type DeleteEventRequest = z.infer<typeof deleteEventRequestSchema>;
 
 export async function GET(request: NextRequest){
 
@@ -60,6 +66,33 @@ export async function POST(request: NextRequest){
             description,
         })
         .onConflictDoNothing()
+        .execute();
+    }catch (error){
+        return NextResponse.json(
+            { error: "Something went wrong."},
+            { status: 500},
+        );
+    }
+
+    return new NextResponse("OK", { status: 200 });
+}
+
+
+export async function DELETE(request: NextRequest){
+    
+    const data = await request.json();
+    try{
+        deleteEventRequestSchema.parse(data);
+    }catch (error){
+        return NextResponse.json({error: "Invalid Request"}, {status: 400});
+    }
+
+    const { id } = data as DeleteEventRequest;
+
+    try{
+        await db
+        .delete(eventTable)
+        .where(eq(eventTable.id, id))
         .execute();
     }catch (error){
         return NextResponse.json(

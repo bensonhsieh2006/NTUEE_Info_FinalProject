@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 
-export default function useAddEvent(){
+export default function useEvent(){
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
@@ -37,8 +37,35 @@ export default function useAddEvent(){
         setLoading(false);
     };
 
+    const deleteEvent = async({
+        id
+    }: {
+        id: string
+    }) => {
+
+        if (loading) return;
+        setLoading(true);
+
+        const res = await fetch("/api/add_event", {
+            method: "DELETE",
+            body: JSON.stringify({
+                id
+            }),
+        });
+
+        if (!res.ok) {
+            const body = await res.json();
+            throw new Error(body.error);
+        }
+        
+        router.refresh();
+        setLoading(false);
+
+    };
+
     return{
         addEvent,
+        deleteEvent,
         loading,
     };
 }
