@@ -43,19 +43,25 @@ function AddEventPopover({defaultDate}: addEventProps){
                 <PopoverTrigger>
                 </PopoverTrigger>
 
-                <PopoverContent className="w-185 h-100 text-wrap mx-8 bg-gray-50 overflow-auto">
-                    <h1> Adding Event</h1>
-
+                <PopoverContent className="w-185 h-165 text-wrap mx-8 bg-slate-50 shadow-2xl overflow-auto" side="right" align="end">
+                    
+                    <div className="flex justify-between pt-2">
+                        <h1 className="text-3xl font-bold"> Adding Event</h1>       
+                        <Button variant="ghost" size="sm" onClick={() => setAddEventOpen(false)}>
+                        ❌
+                        </Button>
+                    </div>
                     <div className="pt-2 border-t mt-2">
-                        <h1 className="">{eventDate ? format(eventDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h1>
+                        <h1 className="text-lg font-semibold">Event Date: {eventDate ? format(eventDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h1>
                         <div className="flex justify-center">
                             <MiniCalendar 
                               mode="single" 
                               selected={eventDate} 
-                              onSelect={setEventDate}>
+                              onSelect={setEventDate}
+                              className="shadow m-4 border-gray-200 border-1">
                             </MiniCalendar>
                         </div>
-                        <div className="w-full">
+                        <div className="w-29/30">
                             <form
                             onSubmit={(e) => {
                                 e.preventDefault();
@@ -69,25 +75,22 @@ function AddEventPopover({defaultDate}: addEventProps){
                                 type="text" 
                                 placeholder="Event" 
                                 value={title} 
-                                className="bg-white" 
+                                className="bg-white m-2" 
                                 onChange={(e) => setTitle(e.target.value)}
                             />
                             <Input 
                                 type="text" 
                                 placeholder="Description" 
                                 value={description} 
-                                className="bg-white" 
+                                className="bg-white m-2" 
                                 onChange={(e) => setDescription(e.target.value)}
                             />
-                            <Button type="submit" disabled={loading}>Add</Button>
+
+                            <div className="flex justify-end">
+                                <Button type="submit" disabled={loading}>Add</Button>
+                            </div>
                             </form>
                         </div>
-                    </div>
-
-                    <div className="flex justify-between pt-2">
-                    <Button variant="outline" size="sm" onClick={() => setAddEventOpen(false)}>
-                        Close
-                    </Button>
                     </div>
 
                 </PopoverContent>

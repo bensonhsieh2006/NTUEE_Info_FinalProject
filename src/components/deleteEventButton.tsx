@@ -9,9 +9,11 @@ export default function DeleteEventButton({ id }:{ id: string }){
 
 
     return(
-        <Button onClick={() => {
-            deleteEvent({ id: id } )
-        }}
+        <Button 
+            onClick={() => {
+                deleteEvent({ id: id } )
+            }}
+            className="bg-cyan-950"
         >
           Delete
         </Button>

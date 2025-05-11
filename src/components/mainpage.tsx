@@ -52,58 +52,59 @@ function MainPage({
 
 
   return(
-    <div className="grid grid-flow-col-dense grid-row-2 items-start mx-8">
-    <div className="">
-        <Popover 
-          open={eventPageOpen} 
-          onOpenChange={setEventPageOpen}
-        >
-        <PopoverTrigger>
-        </PopoverTrigger>
-        <PopoverContent className="w-185 mx-8">
-            <div className="space-y-2">
+    <div className="grid grid-flow-col-dense grid-row-2 items-start mx-8 overflow-auto">
+      <div className="">
+          <Popover 
+            open={eventPageOpen} 
+            onOpenChange={setEventPageOpen}
+          >
+          <PopoverTrigger>
+          </PopoverTrigger>
+          <PopoverContent className="w-185 h-165 mx-8">
+              <div className="space-y-2">
 
-            <h3 className="text-lg">{pickDate ? format(pickDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h3>
-            <div className="h-50 p-3 border-t mt-2 overflow-auto">
-                <h4 className="text-m font-medium mb-1">Events:</h4>
-                {children}
-            </div>
-            
-            <AddEventPopover defaultDate={pickDate}></AddEventPopover>
+              <div className="flex justify-between pt-2">
+                  <h3 className="text-3xl font-bold m-2">{pickDate ? format(pickDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h3>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" onClick={
+                      () => setEventPageOpen(false)
+                    }
+                  >
+                  ❌
+                  </Button>
+              </div>
+              
+              <div className="h-120 p-3 border-t mt-2 overflow-auto">
+                  <h4 className="text-2xl font-semibold m-2">Events:</h4>
+                  {children}
+              </div>
+              
+              <AddEventPopover defaultDate={pickDate}></AddEventPopover>
 
-            <div className="flex justify-end pt-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" onClick={
-                    () => setEventPageOpen(false)
-                  }
-                >
-                Close
-                </Button>
-            </div>
-        </div>
-        </PopoverContent>
-        </Popover>
-    </div>
-    <div className="">
-        <Calendar 
-          mode="single" 
-          selected={pickDate} 
-          onSelect={handleDateSelect} 
-          className="rounded-md border shadow w-185" 
-          /*components={{
-            DayButton
-          }} */
-          modifiers={modifiers}
-          modifiersStyles={modifierStyles}
-        />
-    </div>
-    <div className="row-span-2 grid grid-rows-subgrid">
-        <div className="row-start-2">
-        <TodoList/>
-        
-        </div>
-    </div>
+          </div>
+          </PopoverContent>
+          </Popover>
+      </div>
+      <div className="">
+          <Calendar 
+            mode="single" 
+            selected={pickDate} 
+            onSelect={handleDateSelect} 
+            className="rounded-md border shadow w-185" 
+            /*components={{
+              DayButton
+            }} */
+            modifiers={modifiers}
+            modifiersStyles={modifierStyles}
+          />
+      </div>
+      <div className="row-span-2 grid grid-rows-subgrid">
+          <div className="row-start-2">
+          <TodoList/>
+          
+          </div>
+      </div>
     </div>
   )
 }

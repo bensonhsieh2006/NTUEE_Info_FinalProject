@@ -25,7 +25,7 @@ export default async function Home({
   const {pickedDate} = await searchParams
   
   return (
-    <div>
+    <div className="overflow-auto">
       <MainPage modifiers={modifiers}>
         <AllEvents pickedDate={pickedDate}></AllEvents>
       </MainPage>
