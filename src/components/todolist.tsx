@@ -15,26 +15,30 @@ function Todos()
 {
     const { loading, todos, getTodos } = useTodo();
     // console.log("Todos", todos);
-    useEffect(() => {
-        getTodos();
-    }, []);
+    
+    // useEffect(() => {
+    //     getTodos();
+    // }, []);
 
     if (loading) {
         return <div>Loading...</div>;
     }
 
-    if (todos?.length === 0) {
+    const unfinishedTodos = todos?.filter((todo) => !todo.finished);
+    if (unfinishedTodos?.length === 0) {
         return <h4>No todos found</h4>;
     }
 
+    // console.log("hihi");
     return (
         <>
-            {todos?.map((todo) => (
+            {unfinishedTodos?.map((todo) => (
                 <Todo
                     key={todo.id}
+                    id={todo.id}
                     title={todo.title}
                     description={todo.description}
-                    completed={todo.completed}
+                    finished={todo.finished}
                 />
             ))}
         </>
@@ -54,10 +58,10 @@ function AddTodoButton() {
     }
     const { loading, createTodo } = useTodo();
 
-    const handleClick: EventHandler<MouseEvent> = async (e) => {
+    const handleClick: EventHandler<MouseEvent> = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         e.preventDefault();
-        console.log("Add Todo Button Clicked", title, description);
+        console.log("Add Todo Button Clicked.\n","title: " , title,"  description: " , description);
 
         if (!title) return;
 
