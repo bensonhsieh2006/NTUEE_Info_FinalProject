@@ -26,7 +26,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
         console.error("Invalid todo ID format:", error);
         return NextResponse.json({ error: "Invalid Todo ID format" }, { status: 400 });
     }
-    console.log("ID", id);
+    // console.log("ID", id);
 
     try {
         const todos = await db
@@ -46,7 +46,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
 export async function PUT(request: NextRequest, { params }: { params: { id:string } }) {
 
-    console.log("Request", request);
+    // console.log("Request", request);
     const data = await request.json();
     const { id } = await params;
 

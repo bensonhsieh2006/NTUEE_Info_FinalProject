@@ -9,6 +9,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { toast } from "sonner"
 
 
 function EditButton({ todo }: { todo: TodoProps })
@@ -51,7 +52,7 @@ function EditButton({ todo }: { todo: TodoProps })
                 variant="outline"
                 // onClick={handleClick}
                 size="sm"
-                className="cursor-pointer"
+                className="cursor-pointer ml-2"
             >
                 ✏️
             </Button>
@@ -109,14 +110,43 @@ function Todo(todo: TodoProps)
         
         try {
             console.log("Updating todo:", todo.id, todo.title);
+            const show = !todo.finished;
             await updateTodo(todo);
+            if (show) {
+                toast(() => (
+                    <div className="font-bold text-base text-emerald-700 ">
+                        {"🎉 "+ todo.title + " is completed！"}
+                        {/* <button
+                            // onClick={}
+                            className="ml-4 bg-red-500 text-white p-1 rounded hover:bg-red-300 cursor-pointer"
+                        >
+                            Undo
+                        </button> */}
+                    </div>
+                    ),
+                    {style: {backgroundColor: "#a3fbbe"}}
+                );
+            }
+            else {
+                toast(() => (
+                    <div className="font-bold text-base text-orange-700">
+                        {"🔙 "+ todo.title + " is marked as uncompleted！"}
+                        {/* <button
+                            // onClick={}
+                            className="ml-4 bg-red-500 text-white p-1 rounded hover:bg-red-300 cursor-pointer"
+                        >
+                            Undo
+                        </button> */}
+                    </div>
+                    ),
+                    {style: {backgroundColor: "#fffac9"}}
+                );
+            }
         } 
         catch (error) {
             console.error("Error updating todo:", error);
         }
     }
-
-    
 
     const handleDeleteButtonClick: EventHandler<MouseEvent> = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
@@ -124,6 +154,19 @@ function Todo(todo: TodoProps)
         try {
             console.log("Deleting todo:", todo.id, todo.title);
             await deleteTodo(todo.id);
+            toast(() => (
+                <div className="font-bold text-base text-orange-700">
+                    {"👌 "+ todo.title + " is deleted successfully"}
+                    {/* <button
+                        // onClick={}
+                        className="ml-4 bg-red-500 text-white p-1 rounded hover:bg-red-300 cursor-pointer"
+                    >
+                        Undo
+                    </button> */}
+                </div>
+                ),
+                {style: {backgroundColor: "#ffd1ab"}}
+            );
         } 
         catch (error) {
             console.error("Error deleting todo:", error);
@@ -157,7 +200,7 @@ function Todo(todo: TodoProps)
                     variant="secondary"
                     size="sm"
                     onClick={handleDeleteButtonClick}
-                    className="cursor-pointer"
+                    className="cursor-pointer bg-gray-200 hover:bg-gray-300 grid justify-items-end"
                 >
                     🗑️
                 </Button>

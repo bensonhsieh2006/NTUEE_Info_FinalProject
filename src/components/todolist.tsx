@@ -9,6 +9,8 @@ import type { EventHandler, MouseEvent } from "react";
 import { useState } from "react"
 import useTodo from "@/hooks/useTodo"
 import { useEffect } from "react"
+import { toast } from "sonner"
+import { stringify } from "querystring"
 
 
 function Todos()
@@ -67,6 +69,19 @@ function AddTodoButton() {
 
         try {
             await createTodo(title, description);
+            toast(() => (
+                <div className="font-bold text-base text-green-600">
+                    {"✅ "+ title + " is created successfully"}
+                    {/* <button
+                        // onClick={}
+                        className="ml-4 bg-red-500 text-white p-1 rounded hover:bg-red-300 cursor-pointer"
+                    >
+                        Undo
+                    </button> */}
+                </div>
+                ),
+                {style: {backgroundColor: "#cce7ff"}}
+            );
             setTitle("");
             setDescription("");
         }

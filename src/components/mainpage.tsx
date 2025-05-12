@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { format } from "date-fns"
 import { CompletedTodolist } from "./completedTodolist"
+import { Toaster } from "sonner"
 
 
 function MainPage() {
@@ -126,6 +127,9 @@ function MainPage() {
         <CompletedTodolist/>
         
         </div>
+    </div>
+    <div className="absolute bottom-4 right-4">
+        <Toaster/>
     </div>
     </div>
   )
