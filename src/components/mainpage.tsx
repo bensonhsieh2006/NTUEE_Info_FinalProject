@@ -9,6 +9,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { format } from "date-fns"
+import { CompletedTodolist } from "./completedTodolist"
+import { Toaster } from "sonner"
 
 
 function MainPage() {
@@ -119,6 +121,15 @@ function MainPage() {
         <TodoList/>
         
         </div>
+    </div>
+    <div className="row-span-2 grid grid-rows-subgrid">
+        <div className="row-start-2">
+        <CompletedTodolist/>
+        
+        </div>
+    </div>
+    <div className="absolute bottom-4 right-4">
+        <Toaster/>
     </div>
     </div>
   )
