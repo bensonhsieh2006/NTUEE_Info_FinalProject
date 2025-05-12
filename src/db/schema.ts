@@ -3,9 +3,10 @@ import { index, pgTable, uuid, varchar, date, boolean } from "drizzle-orm/pg-cor
 
 export const eventTable = pgTable("events", {
   id: uuid("id").primaryKey().defaultRandom(),
-  date: date("date"),
-  title: varchar("title", { length: 255}).notNull() ,
-  description: varchar("description", { length: 255}).notNull()
+
+  eventDate: varchar("eventDate", { length: 15 }).notNull(),
+  title: varchar("title", { length: 50}).notNull(),
+  description: varchar("description", { length: 50}).notNull()
 });
 
 export const todoTable = pgTable("todos", {
@@ -14,4 +15,5 @@ export const todoTable = pgTable("todos", {
   title: varchar("title", { length: 255}).notNull().unique() ,
   description: varchar("description", { length: 255}) ,
   finished: boolean("finished").default(false),
+
 });
