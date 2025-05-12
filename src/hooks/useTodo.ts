@@ -59,7 +59,8 @@ export default function useTodo() {
             // ⚡️ 立即更新本地資料，避免二次 API 請求(GPT)
             setTodos((prevTodos) => (prevTodos ? [newTodo, ...prevTodos] : [newTodo]));
             console.log("New Todo", newTodo);
-            // router.refresh();
+            return newTodo;
+            router.refresh();
         } 
         catch (error) {
             console.error("Error creating todo:", error);
@@ -170,5 +171,5 @@ export default function useTodo() {
         }
     };
 
-    return { loading, todos, getTodos, createTodo, deleteTodo, updateTodo, editTodo };
+    return { loading, todos, setTodos, getTodos, createTodo, deleteTodo, updateTodo, editTodo };
 }

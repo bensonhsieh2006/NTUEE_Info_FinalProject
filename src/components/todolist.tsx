@@ -10,12 +10,13 @@ import { useState } from "react"
 import useTodo from "@/hooks/useTodo"
 import { useEffect } from "react"
 import { toast } from "sonner"
-import { stringify } from "querystring"
+import { useRouter } from "next/navigation"
+import type { TodoProps } from "@/types/todo"
 
 
 function Todos()
 {
-    const { loading, todos, getTodos } = useTodo();
+    const { loading, todos } = useTodo();
     // console.log("Todos", todos);
     
     // useEffect(() => {
@@ -58,7 +59,8 @@ function AddTodoButton() {
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(e.target.value);
     }
-    const { loading, createTodo } = useTodo();
+    const { loading, setTodos, createTodo } = useTodo();
+    const router = useRouter();
 
     const handleClick: EventHandler<MouseEvent> = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
@@ -68,7 +70,7 @@ function AddTodoButton() {
         if (!title) return;
 
         try {
-            await createTodo(title, description);
+            const newTodo = await createTodo(title, description);
             toast(() => (
                 <div className="font-bold text-base text-green-600">
                     {"✅ "+ title + " is created successfully"}
@@ -84,6 +86,8 @@ function AddTodoButton() {
             );
             setTitle("");
             setDescription("");
+
+            router.refresh();
         }
         catch (error) {
             console.error("Error creating todo:", error);

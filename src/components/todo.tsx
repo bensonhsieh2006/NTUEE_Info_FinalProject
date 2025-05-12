@@ -14,8 +14,8 @@ import { toast } from "sonner"
 
 function EditButton({ todo }: { todo: TodoProps })
 {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+    const [title, setTitle] = useState(todo.title);
+    const [description, setDescription] = useState(todo.description);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -35,6 +35,19 @@ function EditButton({ todo }: { todo: TodoProps })
 
         try {
             await editTodo(title, description, todo.id);
+            toast(() => (
+                <div className="font-bold text-base">
+                    {"📑 "+ todo.title + " is edited！"}
+                    {/* <button
+                        // onClick={}
+                        className="ml-4 bg-red-500 text-white p-1 rounded hover:bg-red-300 cursor-pointer"
+                    >
+                        Undo
+                    </button> */}
+                </div>
+                ),
+                {style: {backgroundColor: "#ebe9eb"}}
+            );
             setTitle("");
             setDescription("");
         }
