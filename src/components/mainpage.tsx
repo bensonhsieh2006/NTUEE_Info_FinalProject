@@ -7,10 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Button } from "@/components/ui/button"
 
 import { format } from "date-fns"
-import { CompletedTodolist } from "./completedTodolist"
-import { Toaster } from "sonner"
 
-import { TodoList } from "@/components/todolist"
 import { AddEventPopover } from "@/components/AddEventPopover"
 
 import { usePathname, useSearchParams, useRouter } from "next/navigation"
@@ -54,7 +51,7 @@ function MainPage({
 
 
   return(
-    <div className="grid grid-flow-col-dense grid-row-2 items-start mx-8 overflow-auto">
+    <div className="grid grid-flow-col-dense grid-row-2 items-start ml-8 overflow-auto">
       <div className="">
           <Popover 
             open={eventPageOpen} 
@@ -100,21 +97,6 @@ function MainPage({
             modifiers={modifiers}
             modifiersStyles={modifierStyles}
           />
-      </div>
-      <div className="row-span-2 grid grid-rows-subgrid">
-          <div className="row-start-2">
-          <TodoList/>
-          
-          </div>
-      </div>
-      <div className="row-span-2 grid grid-rows-subgrid">
-        <div className="row-start-2">
-        <CompletedTodolist/>
-        
-        </div>
-      </div>
-      <div className="absolute bottom-4 right-4">
-          <Toaster/>
       </div>
     </div>
   )
