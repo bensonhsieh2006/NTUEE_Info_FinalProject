@@ -19,7 +19,7 @@ export default function ColorSelect({ onStateChange }){
         <div className="m-2">
             <Select onValueChange={handleChange}>
                 <SelectTrigger className="bg-white">
-                <SelectValue placeholder="Select a color" />
+                <SelectValue placeholder="Select a color mark" />
                 </SelectTrigger>
                 <SelectContent color="white">
                 <SelectGroup>

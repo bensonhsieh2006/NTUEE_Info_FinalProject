@@ -34,30 +34,32 @@ export default async function Home({
   const {pickedDate} = await searchParams
   
   return (
-    <div className="overflow-auto">
+    <div className="flex justify-center overflow-auto">
       <MainPage eventList={getEvent}>
         <AllEvents pickedDate={pickedDate}></AllEvents>
       </MainPage>
-      <div className="row-span-2 grid grid-rows-subgrid">
-          <div className="">
-            <TodoList>
-                <Todos
-                    selectFinished={false}
-                />
-            </TodoList>
-          </div>
-      </div>
-      <div className="row-span-2 grid grid-rows-subgrid">
-        <div className="">
-          <CompletedTodolist>
-              <Todos
-                  selectFinished={true}
-              />
-          </CompletedTodolist>
+      <div className="flex justify-center border-1 rounded-lg shadow-lg m-6 h-162">
+        <div className="row-span-2 grid grid-rows-subgrid m-4 ">
+            <div className="">
+              <TodoList>
+                  <Todos
+                      selectFinished={false}
+                  />
+              </TodoList>
+            </div>
         </div>
-      </div>
-      <div className="absolute bottom-4 right-4">
-          <Toaster/>
+        <div className="row-span-2 grid grid-rows-subgrid m-4">
+          <div className="">
+            <CompletedTodolist>
+                <Todos
+                    selectFinished={true}
+                />
+            </CompletedTodolist>
+          </div>
+        </div>
+        <div className="absolute bottom-4 right-4">
+            <Toaster/>
+        </div>
       </div>
     </div>
 

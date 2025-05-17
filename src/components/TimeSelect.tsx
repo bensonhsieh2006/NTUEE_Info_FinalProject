@@ -29,10 +29,10 @@ export default function TimeSelect({ onStartHourChange, onStartMinuteChange, onE
     }
     
     return(
-        <div className="flex m-4 justify-start items-center">
+        <div className="flex m-3 justify-start items-center">
             <h1>From </h1>
             <Select onValueChange={handleStartHourChange}>
-                <SelectTrigger className="bg-white m-2">
+                <SelectTrigger className="bg-white mx-2">
                 <SelectValue placeholder="Select hour" />
                 </SelectTrigger>
                 <SelectContent color="white">
@@ -69,7 +69,7 @@ export default function TimeSelect({ onStartHourChange, onStartMinuteChange, onE
             <h1> : </h1>
 
             <Select onValueChange={handleStartMinuteChange}>
-                <SelectTrigger className="bg-white m-2">
+                <SelectTrigger className="bg-white mx-2">
                 <SelectValue placeholder="Select minute" />
                 </SelectTrigger>
                 <SelectContent color="white">
@@ -87,7 +87,7 @@ export default function TimeSelect({ onStartHourChange, onStartMinuteChange, onE
             
             <h1>to </h1>
             <Select onValueChange={handleEndHourChange}>
-                <SelectTrigger className="bg-white m-2">
+                <SelectTrigger className="bg-white mx-2">
                 <SelectValue placeholder="Select hour" />
                 </SelectTrigger>
                 <SelectContent color="white">
@@ -124,7 +124,7 @@ export default function TimeSelect({ onStartHourChange, onStartMinuteChange, onE
             <h1> : </h1>
 
             <Select onValueChange={handleEndMinuteChange}>
-                <SelectTrigger className="bg-white m-2">
+                <SelectTrigger className="bg-white mx-2">
                 <SelectValue placeholder="Select minute" />
                 </SelectTrigger>
                 <SelectContent color="white">
