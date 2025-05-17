@@ -3,15 +3,20 @@ import { todoTable } from "@/db/schema";
 import { db } from "@/db"
 import { eq } from "drizzle-orm";
 
+let finishedTodosCount = 0;
+let unfinishedTodosCount = 0;
+
 async function Todos(
     { selectFinished }: { selectFinished?: boolean } 
 )
 {
-    const unfinishedTodos = await db.select().from(todoTable).where(eq(todoTable.finished, selectFinished || false));
+    const selectedTodos = await db.select().from(todoTable).where(eq(todoTable.finished, selectFinished || false));
+    if(selectFinished)finishedTodosCount = selectedTodos.length;
+    else unfinishedTodosCount = selectedTodos.length;
 
     return (
         <>
-            {unfinishedTodos?.map((todo) => (
+            {selectedTodos?.map((todo) => (
                 <Todo
                     key={todo.id}
                     id={todo.id}
@@ -24,4 +29,4 @@ async function Todos(
     );
 }
 
-export { Todos }
+export { Todos, finishedTodosCount, unfinishedTodosCount };

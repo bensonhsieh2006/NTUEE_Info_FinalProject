@@ -96,6 +96,30 @@ export default function useTodo() {
         }
     };
 
+    const deleteFinishedTodos = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch("/api/todos/", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ finished: true }),
+            });
+            if (!response.ok) {
+                throw new Error("Failed to delete finished todos");
+            }
+            
+            router.refresh();
+        }
+        catch (error) {
+            console.error("Error deleting finished todos:", error);
+        }
+        finally {
+            setLoading(false);
+        }
+    };
+
     const updateTodo = async (todo:TodoProps) => {
         setLoading(true);
         // console.log("Todo Object:", todo);
@@ -172,5 +196,5 @@ export default function useTodo() {
         }
     };
 
-    return { loading, todos, setTodos, getTodos, createTodo, deleteTodo, updateTodo, editTodo };
+    return { loading, todos, setTodos, getTodos, createTodo, deleteTodo, deleteFinishedTodos, updateTodo, editTodo };
 }

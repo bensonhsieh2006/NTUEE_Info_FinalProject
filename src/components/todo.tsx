@@ -188,7 +188,7 @@ function Todo(todo: TodoProps)
 
     return(
         <>
-            <div className="flex group grid grid-cols-[2rem_1.5fr_1fr_1fr] gap-4 items-center w-100 p-2 border-gray-300 hover:bg-gray-100 justify-self-start">
+            <div className="flex group grid grid-cols-[2rem_2fr_0.5fr_0.5fr] gap-4 items-center w-100 p-2 border-gray-300 hover:bg-gray-100 justify-self-start">
                 
                 <Checkbox
                     onClick={handleCheckboxClick}

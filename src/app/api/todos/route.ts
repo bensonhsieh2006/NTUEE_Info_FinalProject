@@ -14,6 +14,11 @@ const TodoSchema = z.object({
 
 type Todo = z.infer<typeof TodoSchema>;
 
+const DeleteSchema = z.object({
+    finished: z.boolean().default(false),
+});
+
+type DeleteTodo = z.infer<typeof DeleteSchema>;
 
 export async function GET() {
 
@@ -61,5 +66,34 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "Failed to create todo" }, { status: 500 });
     }
     // return new NextResponse("OK", { status: 200 });
+}
+
+export async function DELETE(request: NextRequest) {
+    const data = await request.json();
+
+    try {
+        DeleteSchema.safeParse(data);
+    }
+    catch (error) {
+        console.error("Error parsing data:", error);
+        return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    }
+
+    const { finished } = data as DeleteTodo;
+
+    try {
+        const result = await db
+            .delete(todoTable)
+            .where(
+                eq(todoTable.finished, finished)
+            )
+            .returning()
+            .execute();
+            return NextResponse.json(result, { status: 201 });
+    } 
+    catch (error) {
+        console.error("Error deleting data:", error);
+        return NextResponse.json({ error: "Failed to delete todo" }, { status: 500 });
+    }
 }
 
