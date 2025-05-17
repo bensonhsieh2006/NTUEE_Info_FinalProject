@@ -1,5 +1,4 @@
 "use client"
-
 import * as React from "react"
 
 import { Calendar } from "@/components/ui/calendar"
@@ -15,10 +14,10 @@ import { checkDate } from "@/lib/utils"
 
 function MainPage({
   children,
-  modifiers
+  eventList
 }: {
   children: React.ReactNode,
-  modifiers: any
+  eventList: {count: number, eventDate: string}[]
 }) {
   const [pickDate, setPickDate] = React.useState<Date | undefined>(new Date());
   const [eventPageOpen, setEventPageOpen] = React.useState(false);
@@ -27,11 +26,14 @@ function MainPage({
   const pathname = usePathname();
 
   const modifierStyles = {
-    booked: {
+    booked: "bg-sky-200/90 rounded-xl after:text-sm after:content-[1] after:absolute after:bottom-1 after:right-0.5"
+    /*{
+
       backgroundColor: "rgb(174, 214, 241)",
       color: "white",
-      borderRadius: "50%"
-    }
+      borderRadius: "50%",
+
+    }*/
   }
   const handleDateSelect = (selectedDate: Date | undefined) => {
     setPickDate(selectedDate)
@@ -42,11 +44,10 @@ function MainPage({
     params.set("pickedDate", pickedDate!);
     router.push(`${pathname}?${params.toString()}`);
 
-    console.log(pickedDate);
-
     if (selectedDate) {
       setEventPageOpen(true)
     }
+    console.log(eventList)
   }
 
 
@@ -94,8 +95,8 @@ function MainPage({
             /*components={{
               DayButton
             }} */
-            modifiers={modifiers}
-            modifiersStyles={modifierStyles}
+            modifiers={{booked: eventList.map((event) => (new Date (event.eventDate)))}}
+            modifiersClassNames={modifierStyles}
           />
       </div>
     </div>

@@ -1,8 +1,9 @@
 import * as React from "react"
- 
+
 import { MainPage } from "@/components/mainpage"
 import AllEvents from "@/components/AllEvents"
 import { db } from "@/db"
+import { count, eq, sql } from "drizzle-orm"
 import { eventTable } from "@/db/schema"
 import { Toaster } from "sonner"
 import { TodoList } from "@/components/todolist"
@@ -16,21 +17,25 @@ export default async function Home({
     searchParams: {[key: string]: string}
   }) {
   
-  const getBookedDates: { eventDate: string }[] = await db
+  /*const getBookedDates: { eventDate: string }[] = await db
   .selectDistinct({
     eventDate: eventTable.eventDate
   })
-  .from(eventTable)
+  .from(eventTable)*/
 
-  const modifiers = {
-    booked: getBookedDates.map((event) => new Date(event.eventDate))
-  }
+  const getEvent: { count: number, eventDate: string }[] = await db
+  .select({
+    count: sql<number>`count(*)`.as('count'),
+    eventDate: eventTable.eventDate
+  })
+  .from(eventTable)
+  .groupBy(eventTable.eventDate)
 
   const {pickedDate} = await searchParams
   
   return (
-    <div className="grid grid-flow-col-dense grid-row-2 items-start overflow-auto mt-8 gap-8">
-      <MainPage modifiers={modifiers}>
+    <div className="overflow-auto">
+      <MainPage eventList={getEvent}>
         <AllEvents pickedDate={pickedDate}></AllEvents>
       </MainPage>
       <div className="row-span-2 grid grid-rows-subgrid">

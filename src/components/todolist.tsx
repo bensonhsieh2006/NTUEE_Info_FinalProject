@@ -33,7 +33,7 @@ function AddTodoButton() {
         if (!title) return;
 
         try {
-            const newTodo = await createTodo(title, description);
+            createTodo(title, description);
             toast(() => (
                 <div className="font-bold text-base text-green-600">
                     {"✅ "+ title + " is created successfully"}
