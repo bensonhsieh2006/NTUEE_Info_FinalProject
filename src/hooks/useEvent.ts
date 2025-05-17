@@ -11,10 +11,21 @@ export default function useEvent(){
         eventDate,
         title,
         description,
+        colorValue,
+        startHour,
+        startMin,
+        endHour,
+        endMin
     }:{
         eventDate: string,
-        title: string;
-        description: string;
+        title: string,
+        description: string,
+        colorValue: string,
+        startHour: number,
+        startMin: number,
+        endHour: number,
+        endMin: number,
+
     }) => {
         if (loading) return;
         setLoading(true);
@@ -24,7 +35,12 @@ export default function useEvent(){
             body: JSON.stringify({
                 eventDate,
                 title,
-                description
+                description,
+                colorValue,
+                startHour,
+                startMin,
+                endHour,
+                endMin,
             }),
         });
 

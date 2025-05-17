@@ -5,6 +5,10 @@ import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import { MiniCalendar } from "@/components/minicalendar"
+import ColorSelect from "@/components/ColorSelect"
+import TimeSelect from "./TimeSelect"
+
+import { toast } from "sonner"
 
 import { format } from "date-fns"
 
@@ -22,15 +26,36 @@ function AddEventPopover({defaultDate}: addEventProps){
     const [addEventOpen, setAddEventOpen] = React.useState(false)
     const [title, setTitle] = React.useState("")
     const [description, setDescription] = React.useState("")
+    const [colorValue, setColorValue] = React.useState("")
+    const [startHour, setStartHour] = React.useState(0)
+    const [startMin, setStartMin] = React.useState(0)
+    const [endHour, setEndHour] = React.useState(0)
+    const [endMin, setEndMin] = React.useState(0)
+
     const {addEvent, loading} = useEvent();
 
-    const handleAddEvent = async (title: string, description: string, date: string) => {
+    const handleAddEvent = async (title: string, description: string, date: string, colorValue: string, startHour: number, startMin: number, endHour: number, endMin: number, resDate: string) => {
         addEvent({
             eventDate: date,
             title: title,
-            description: description})
+            description: description,
+            colorValue: colorValue,
+            startHour: startHour,
+            startMin: startMin,
+            endHour: endHour,
+            endMin: endMin})
+
+        toast(() => (
+            <div className="font-bold text-base">
+                {"📅 \""+ title + "\" event is added in " + resDate + "!"}
+            </div>
+            ),
+            {style: {backgroundColor: "#ebe9eb"}}
+        );
+
         setTitle("");
         setDescription("");
+        setColorValue("");
     }
     
     return (
@@ -68,9 +93,20 @@ function AddEventPopover({defaultDate}: addEventProps){
                                 if (eventDate === undefined){
 
                                 }
-                                handleAddEvent(title, description, format(checkDate(eventDate), "yyyy-MM-dd"))
+                                handleAddEvent(title, description, format(checkDate(eventDate), "yyyy-MM-dd"), colorValue, startHour, startMin, endHour, endMin, format(checkDate(eventDate), "yyyy/MM/dd"), )
                             }}
                             >
+
+                            <div>
+                                <TimeSelect 
+                                  onStartHourChange={(newStartHour: number) => (setStartHour(newStartHour))}
+                                  onStartMinuteChange={(newStartMinute: number) => (setStartMin(newStartMinute))}
+                                  onEndHourChange={(newEndHour: number) => (setEndHour(newEndHour))}
+                                  onEndMinuteChange={(newEndMinute: number) => (setEndMin(newEndMinute))}
+                                  >
+                                </TimeSelect>
+                            </div>
+
                             <Input 
                                 type="text" 
                                 placeholder="Event" 
@@ -86,8 +122,15 @@ function AddEventPopover({defaultDate}: addEventProps){
                                 onChange={(e) => setDescription(e.target.value)}
                             />
 
-                            <div className="flex justify-end">
-                                <Button type="submit" disabled={loading}>Add</Button>
+                            <div className="flex justify-between">
+                                <ColorSelect 
+                                    onStateChange={(newColor: string) => {
+                                        setColorValue(newColor);
+                                    }}
+                                >
+
+                                </ColorSelect>
+                                <Button type="submit" disabled={loading} className="mt-2">Add</Button>
                             </div>
                             </form>
                         </div>
