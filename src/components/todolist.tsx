@@ -120,7 +120,7 @@ function TodoList( {children}: { children: React.ReactNode } )
     return(
     <>
         <div className="flex-col text-2xl gap-4">
-            <h1>Todo List :</h1>
+            <h1 className="font-bold border-b-2 border-b-gray-400 my-4 pb-4 pl-2">Todo List :</h1>
             {children}
         </div>
         <div className="flex-col text-2xl gap-4 p-4">

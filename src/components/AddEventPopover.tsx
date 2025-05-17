@@ -70,14 +70,14 @@ function AddEventPopover({defaultDate}: addEventProps){
 
                 <PopoverContent className="w-185 h-165 text-wrap mx-8 bg-slate-50 shadow-2xl overflow-auto" side="right" align="end">
                     
-                    <div className="flex justify-between pt-2">
+                    <div className="flex justify-between p-4">
                         <h1 className="text-3xl font-bold"> Adding Event</h1>       
                         <Button variant="ghost" size="sm" onClick={() => setAddEventOpen(false)}>
                         ❌
                         </Button>
                     </div>
-                    <div className="pt-2 border-t mt-2">
-                        <h1 className="text-lg font-semibold">Event Date: {eventDate ? format(eventDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h1>
+                    <div className="p-2 border-t-4 border-t-gray-200 mt-2">
+                        <h1 className="p-3 text-xl font-semibold">{eventDate ? "Selected Date:  " + format(eventDate, "EEEE, MMMM d, yyyy") : "Select a date"}</h1>
                         <div className="flex justify-center">
                             <MiniCalendar 
                               mode="single" 
@@ -97,7 +97,8 @@ function AddEventPopover({defaultDate}: addEventProps){
                             }}
                             >
 
-                            <div>
+                            <div className="border-t-1 border-t-slate-200 pt-4">
+                                <h1 className="font-semibold pl-2 text-xl">Event Time</h1>
                                 <TimeSelect 
                                   onStartHourChange={(newStartHour: number) => (setStartHour(newStartHour))}
                                   onStartMinuteChange={(newStartMinute: number) => (setStartMin(newStartMinute))}
@@ -106,21 +107,24 @@ function AddEventPopover({defaultDate}: addEventProps){
                                   >
                                 </TimeSelect>
                             </div>
+                            
+                            <div className="border-t-1 border-t-slate-200 py-4">
+                                <Input 
+                                    type="text" 
+                                    placeholder="Event" 
+                                    value={title} 
+                                    className="bg-white m-2" 
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
+                                <Input 
+                                    type="text" 
+                                    placeholder="Description" 
+                                    value={description} 
+                                    className="bg-white m-2" 
+                                    onChange={(e) => setDescription(e.target.value)}
+                                />
+                            </div>
 
-                            <Input 
-                                type="text" 
-                                placeholder="Event" 
-                                value={title} 
-                                className="bg-white m-2" 
-                                onChange={(e) => setTitle(e.target.value)}
-                            />
-                            <Input 
-                                type="text" 
-                                placeholder="Description" 
-                                value={description} 
-                                className="bg-white m-2" 
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
 
                             <div className="flex justify-between">
                                 <ColorSelect 

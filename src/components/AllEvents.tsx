@@ -1,6 +1,6 @@
 import { db } from "@/db"
 import { eventTable } from "@/db/schema"
-import { eq } from "drizzle-orm"
+import { eq, sql } from "drizzle-orm"
 
 import DeleteEventButton from "@/components/deleteEventButton"
 
@@ -15,6 +15,11 @@ export default async function AllEvents({pickedDate}: AllEventsProp){
     .from(eventTable)
     .where(eq(eventTable.eventDate, pickedDate))
 
+    const countEvent = await db
+    .select({count: sql<number>`count(*)`.as('count')})
+    .from(eventTable)
+    .where(eq(eventTable.eventDate, pickedDate))
+
     const bgColor = {
       "red": "bg-red-200/50 p-2 rounded-xl m-2",
       "orange": "bg-orange-200/50 p-2 rounded-xl m-2",
@@ -25,6 +30,7 @@ export default async function AllEvents({pickedDate}: AllEventsProp){
     }
     return(
       <ul>
+        <h4 className="text-2xl font-semibold m-2">Events (Total: {countEvent[0].count})</h4>
         {allEvents.map((event: any)=>(
             <li key={event.id} className={bgColor[event.colorValue]}>
               <div className="flex justify-between text-xl p-2 border-b-2 border-gray-600">

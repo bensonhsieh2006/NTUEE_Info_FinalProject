@@ -26,14 +26,12 @@ function MainPage({
   const pathname = usePathname();
 
   const modifierStyles = {
-    booked: "bg-sky-200/90 rounded-xl after:text-sm after:content-[1] after:absolute after:bottom-1 after:right-0.5"
-    /*{
-
-      backgroundColor: "rgb(174, 214, 241)",
-      color: "white",
+    booked: 
+    {
+      backgroundColor: "rgb(205, 233, 252)",
+      color: "black",
       borderRadius: "50%",
-
-    }*/
+    }
   }
   const handleDateSelect = (selectedDate: Date | undefined) => {
     setPickDate(selectedDate)
@@ -52,7 +50,7 @@ function MainPage({
 
 
   return(
-    <div className="grid grid-flow-col-dense grid-row-2 items-start ml-8 overflow-auto">
+    <div className="items-start ml-8 overflow-auto">
       <div className="">
           <Popover 
             open={eventPageOpen} 
@@ -60,7 +58,7 @@ function MainPage({
           >
           <PopoverTrigger>
           </PopoverTrigger>
-          <PopoverContent className="w-185 h-165 mx-8">
+          <PopoverContent className="w-185 h-165 ml-10 shadow-2xl">
               <div className="space-y-2">
 
               <div className="flex justify-between pt-2">
@@ -75,8 +73,7 @@ function MainPage({
                   </Button>
               </div>
               
-              <div className="h-120 p-3 border-t mt-2 overflow-auto">
-                  <h4 className="text-2xl font-semibold m-2">Events:</h4>
+              <div className="h-120 p-3 border-t-4 border-t-gray-200 mt-2 overflow-auto">
                   {children}
               </div>
               
@@ -91,12 +88,12 @@ function MainPage({
             mode="single" 
             selected={pickDate} 
             onSelect={handleDateSelect} 
-            className="rounded-md border shadow w-185" 
+            className="rounded-md border shadow-lg w-185" 
             /*components={{
               DayButton
             }} */
             modifiers={{booked: eventList.map((event) => (new Date (event.eventDate)))}}
-            modifiersClassNames={modifierStyles}
+            modifiersStyles={modifierStyles}
           />
       </div>
     </div>
