@@ -17,12 +17,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 #### Calendar
 
 - Add your events and set the time on your calendar !
-![Calendar](/public/img/Calendar.jpg)
+![Calendar](/public/img/Calendar.gif)
 
 #### Todolist
 
 - List all your to-do items and complete them !
-![Todolist](/public/img/Todolist.jpg)
+![Todolist](/public/img/Todolist.gif)
 
 
 ## <a name="tech-stack"> Tech Stack 🔧</a>
