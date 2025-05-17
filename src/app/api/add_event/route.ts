@@ -11,6 +11,11 @@ const addEventRequestSchema = z.object({
     //eventDate: z.string().min(1).max(15),
     title: z.string().min(1).max(50),
     description: z.string().min(1).max(50),
+    colorValue: z.string().min(1).max(15),
+    startHour: z.number().int(),
+    startMin: z.number().int(),
+    endHour: z.number().int(),
+    endMin: z.number().int(),
 });
 
 const deleteEventRequestSchema = z.object({
@@ -55,7 +60,7 @@ export async function POST(request: NextRequest){
         return NextResponse.json({error: "Invalid Request"}, {status: 400});
     }
 
-    const {eventDate, title, description} = data as AddEventRequest;
+    const {eventDate, title, description, colorValue, startHour, startMin, endHour, endMin} = data as AddEventRequest;
 
     try{
         await db
@@ -64,6 +69,11 @@ export async function POST(request: NextRequest){
             eventDate,
             title,
             description,
+            colorValue,
+            startHour,
+            startMin,
+            endHour,
+            endMin
         })
         .onConflictDoNothing()
         .execute();
