@@ -1,6 +1,5 @@
 "use client"
 
-import { Todo } from "@/components/todo"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Input } from "@/components/ui/input"
@@ -8,45 +7,9 @@ import { Label } from "@/components/ui/label"
 import type { EventHandler, MouseEvent } from "react";
 import { useState } from "react"
 import useTodo from "@/hooks/useTodo"
-import { useEffect } from "react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import type { TodoProps } from "@/types/todo"
 
-
-function Todos()
-{
-    const { loading, todos } = useTodo();
-    // console.log("Todos", todos);
-    
-    // useEffect(() => {
-    //     getTodos();
-    // }, []);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    const unfinishedTodos = todos?.filter((todo) => !todo.finished);
-    if (unfinishedTodos?.length === 0) {
-        return <h4>No todos found</h4>;
-    }
-
-    // console.log("hihi");
-    return (
-        <>
-            {unfinishedTodos?.map((todo) => (
-                <Todo
-                    key={todo.id}
-                    id={todo.id}
-                    title={todo.title}
-                    description={todo.description}
-                    finished={todo.finished}
-                />
-            ))}
-        </>
-    );
-}
 
 function AddTodoButton() {
 
@@ -59,7 +22,7 @@ function AddTodoButton() {
     const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(e.target.value);
     }
-    const { loading, setTodos, createTodo } = useTodo();
+    const { loading, setTodos, createTodo, getTodos } = useTodo();
     const router = useRouter();
 
     const handleClick: EventHandler<MouseEvent> = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -86,7 +49,7 @@ function AddTodoButton() {
             );
             setTitle("");
             setDescription("");
-
+            await getTodos();
             router.refresh();
         }
         catch (error) {
@@ -152,15 +115,15 @@ function AddTodoButton() {
     )
 }
 
-function TodoList()
+function TodoList( {children}: { children: React.ReactNode } )
 {
     return(
     <>
         <div className="flex-col text-2xl gap-4">
             <h1>Todo List :</h1>
-            <Todos/>
+            {children}
         </div>
-        <div className="flex-col text-2xl gap-4">
+        <div className="flex-col text-2xl gap-4 p-4">
             <AddTodoButton/>
         </div>
     </>

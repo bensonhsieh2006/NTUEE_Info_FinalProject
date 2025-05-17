@@ -5,6 +5,10 @@ import AllEvents from "@/components/AllEvents"
 import { db } from "@/db"
 import { count, eq, sql } from "drizzle-orm"
 import { eventTable } from "@/db/schema"
+import { Toaster } from "sonner"
+import { TodoList } from "@/components/todolist"
+import { Todos } from "@/components/todos"
+import { CompletedTodolist } from "@/components/completedTodolist"
 
 
 export default async function Home({
@@ -34,7 +38,27 @@ export default async function Home({
       <MainPage eventList={getEvent}>
         <AllEvents pickedDate={pickedDate}></AllEvents>
       </MainPage>
-      
+      <div className="row-span-2 grid grid-rows-subgrid">
+          <div className="">
+            <TodoList>
+                <Todos
+                    selectFinished={false}
+                />
+            </TodoList>
+          </div>
+      </div>
+      <div className="row-span-2 grid grid-rows-subgrid">
+        <div className="">
+          <CompletedTodolist>
+              <Todos
+                  selectFinished={true}
+              />
+          </CompletedTodolist>
+        </div>
+      </div>
+      <div className="absolute bottom-4 right-4">
+          <Toaster/>
+      </div>
     </div>
 
   )

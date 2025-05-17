@@ -11,7 +11,7 @@ export default function useTodo() {
     const router = useRouter();
 
 
-    const getTodos =  useCallback(async () => {
+    const getTodos =  async () => {
         setLoading(true);
         try {
             const response = await fetch("/api/todos", {
@@ -34,11 +34,8 @@ export default function useTodo() {
         finally {
             setLoading(false);
         }   
-    }, []);
+    };
 
-    useEffect(() => {
-        getTodos();
-    }, [getTodos]);
 
     const createTodo = async (title: string, description: string) => {
         setLoading(true);
@@ -57,7 +54,11 @@ export default function useTodo() {
             const newTodo = await response.json();
 
             // ⚡️ 立即更新本地資料，避免二次 API 請求(GPT)
-            setTodos((prevTodos) => (prevTodos ? [newTodo, ...prevTodos] : [newTodo]));
+            // setTodos((prevTodos) => (prevTodos ? [newTodo, ...prevTodos] : [newTodo]));
+            if (!todos)
+                setTodos([newTodo]);
+            else
+                setTodos([...todos, newTodo]);
             console.log("New Todo", newTodo);
             return newTodo;
             router.refresh();

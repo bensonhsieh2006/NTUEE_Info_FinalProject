@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
 
 
-function EditButton({ todo }: { todo: TodoProps })
+function EditButton({ todo, className }: { todo: TodoProps, className?: string })
 {
     const [title, setTitle] = useState(todo.title);
     const [description, setDescription] = useState(todo.description);
@@ -65,7 +65,7 @@ function EditButton({ todo }: { todo: TodoProps })
                 variant="outline"
                 // onClick={handleClick}
                 size="sm"
-                className="cursor-pointer ml-2"
+                className="cursor-pointer ml-2 opacity-30 group-hover:opacity-100"
             >
                 ✏️
             </Button>
@@ -188,12 +188,14 @@ function Todo(todo: TodoProps)
 
     return(
         <>
-            <div className="flex gap-4">
+            <div className="flex group grid grid-cols-[2rem_1.5fr_1fr_1fr] gap-4 items-center w-100 p-2 border-gray-300 hover:bg-gray-100 justify-self-start">
+                
                 <Checkbox
                     onClick={handleCheckboxClick}
                     checked={todo.finished}
                     className="cursor-pointer"
                 />
+                
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
@@ -204,7 +206,7 @@ function Todo(todo: TodoProps)
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
-
+            
                 <EditButton
                     todo={todo}
                 />
@@ -213,7 +215,7 @@ function Todo(todo: TodoProps)
                     variant="secondary"
                     size="sm"
                     onClick={handleDeleteButtonClick}
-                    className="cursor-pointer bg-gray-200 hover:bg-gray-300 grid justify-items-end"
+                    className="cursor-pointer bg-gray-200 hover:bg-gray-300 grid justify-items-end opacity-30 group-hover:opacity-100"
                 >
                     🗑️
                 </Button>
