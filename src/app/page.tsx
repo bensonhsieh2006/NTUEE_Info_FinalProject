@@ -14,7 +14,7 @@ import { CompletedTodolist } from "@/components/completedTodolist"
 export default async function Home({
   searchParams
   }: {
-    searchParams: {[key: string]: string}
+    searchParams: Promise<{[key: string]: string}>
   }) {
   
   /*const getBookedDates: { eventDate: string }[] = await db
