@@ -15,7 +15,7 @@ const IdSchema = z.string().uuid("Invalid UUID format");
 
 type Todo = z.infer<typeof TodoSchema>;
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
    
     const { id } = await params;
 
@@ -44,7 +44,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id:string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id:string }> }) {
 
     // console.log("Request", request);
     const data = await request.json();
