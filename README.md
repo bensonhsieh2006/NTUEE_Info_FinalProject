@@ -1,7 +1,6 @@
 <h1 align="center">Calendar and Todolist</h1>
 
-![Website Deploy]()
-![License]()
+![Website Deploy](https://deploy-badge.vercel.app/?url=https://ntuee-info-final-project.vercel.app/&name=Calendar_and_Todolist)
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
@@ -73,7 +72,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## <a name="deploy"> Deploy 🚚</a>
 
-- The app has been deployed on ...
+- The app has been deployed on [HERE](https://ntuee-info-final-project.vercel.app/)
 
 
 ## <a name="reference"> Reference 💡</a>
@@ -100,4 +99,4 @@ reflection:
 
 name: 楊曦磊  
 studentID: B13901175  
-reflection:  
+reflection:  製作Final Project不僅讓我完整的了解一遍next.js大概的運作原理，以及一個簡單的網頁app的製作過程。其中也遇到了困難像是操作後必須手動刷新頁面才能更新顯示的問題，問了隊友和學長後改寫了方法，最後終於解決了問題。總而言之，這次的project和兩個學期的部課收穫很多，雖然有時上課會聽不太懂，但我覺得只要自己試著動手做一定能解決很多疑惑。
