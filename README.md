@@ -95,7 +95,7 @@ Please mark the origin clearly if you want to cite the project.
 
 name: 謝秉宸  
 studentID: B13901186  
-reflection:  
+reflection: 這是我第一次寫後端的經驗，之前聽部長上課的時候覺得似乎沒有很困難，每個部分都聽起來很合理，但自己操作過一遍之後才發現有很多問題需要解決。這次的專題中，我不僅學到了更多寫網頁好用的工具，也對資料庫與前端的對接，以及對資料庫儲存、提取資料的流程有了更進一步的認識。
 
 name: 楊曦磊  
 studentID: B13901175  
